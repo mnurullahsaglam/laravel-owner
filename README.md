@@ -18,20 +18,24 @@ composer require mnurullahsaglam/laravel-owner
 ## Usage
 
 - Add `HasOwner` trait to your model.
-- Specify the owner model in `owner` property. (Default: `App\Models\User`)
-- Specify the owner foreign key in `ownerKey` property. (Default: `user_id`)
+
+By default, the owner model is `App\Models\User` and the owner key is `user_id`. If you want to change these values, you can override them in your model.
 
 ```php
 use Illuminate\Database\Eloquent\Model;
 use Mnurullahsaglam\LaravelOwner\HasOwner;
+use Mnurullahsaglam\LaravelOwner\OwnerSettings;
 
 class Post extends Model
 {
     use HasOwner;
 
-    protected $owner = User::class;
-
-    protected $ownerKey = 'user_id';
+    public function getOwnerSettings(): OwnerSettings
+    {
+        return OwnerSettings::create()
+            ->setOwnerModel(App\Models\Owner::class)
+            ->setOwnerKey('owner_id');
+    }
 }
 ```
 
@@ -40,7 +44,7 @@ You can access the owner model with `owner` relationship.
 ```php
 $post = Post::find(1);
 
-$post->owner;
+return $post->owner;
 ```
 
 ## Testing
