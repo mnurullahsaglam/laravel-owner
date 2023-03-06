@@ -16,7 +16,7 @@ class OwnerSettings
         return new static();
     }
 
-    public function setOWnerModel(string $ownerModel): self
+    public function setOwnerModel(string $ownerModel): self
     {
         $this->ownerModel = $ownerModel;
 
