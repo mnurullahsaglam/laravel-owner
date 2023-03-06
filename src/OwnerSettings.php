@@ -8,9 +8,6 @@ class OwnerSettings
 
     public string $ownerIdColumn = 'user_id';
 
-    /**
-     * @return $this
-     */
     public static function create(): static
     {
         return new static();
