@@ -24,7 +24,6 @@ class OwnerSettings
     }
 
     /**
-     * @param string $ownerIdColumn
      * @return $this
      */
     public function setOwnerColumn(string $ownerIdColumn): self
