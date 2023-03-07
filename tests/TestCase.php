@@ -2,7 +2,8 @@
 
 namespace Mnurullahsaglam\LaravelOwner\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -11,18 +12,29 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Mnurullahsaglam\\LaravelOwner\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        $this->setUpDatabase();
     }
 
-    public function getEnvironmentSetUp($app)
+    protected function tearDown(): void
     {
-        config()->set('database.default', 'testing');
+        Schema::dropIfExists('test_users');
+        Schema::dropIfExists('test_posts');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_laravel-owner_table.php.stub';
-        $migration->up();
-        */
+        parent::tearDown();
+    }
+
+    public function setUpDatabase()
+    {
+        Schema::create('test_users', function (Blueprint $table) {
+            $table->id();
+            $table->string('email')->unique();
+            $table->string('password');
+        });
+
+        Schema::create('test_posts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('test_users')->cascadeOnDelete();
+            $table->string('title');
+        });
     }
 }
