@@ -1,5 +1,6 @@
 includes:
     - phpstan-baseline.neon
+    - phpstan.ignoreErrors.neon
 
 parameters:
     level: 4
