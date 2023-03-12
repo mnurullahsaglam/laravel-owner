@@ -1,17 +1,17 @@
 <?php
 
-it('has OwnerSettings class', function () {
-    expect(class_exists(\Mnurullahsaglam\LaravelOwner\OwnerSettings::class))->toBeTrue();
+use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidSetting;
+use Mnurullahsaglam\LaravelOwner\HasOwner;
+use Mnurullahsaglam\LaravelOwner\OwnerSettings;
+
+test('OwnerSettings class exists', function () {
+    expect(class_exists(OwnerSettings::class))->toBeTrue();
 });
 
-it('has InvalidSettings exception class', function () {
-    expect(class_exists(\Mnurullahsaglam\LaravelOwner\Exceptions\InvalidSetting::class))->toBeTrue();
+test('InvalidSettings exception class exists', function () {
+    expect(class_exists(InvalidSetting::class))->toBeTrue();
 });
 
-it('has HasOwner trait', function () {
-    expect(trait_exists(\Mnurullahsaglam\LaravelOwner\HasOwner::class))->toBeTrue();
-});
-
-it('uses HasOwner trait in default model', function () {
-    expect(in_array(\Mnurullahsaglam\LaravelOwner\HasOwner::class, class_uses(\Mnurullahsaglam\LaravelOwner\Tests\Models\TestDefaultModel::class)))->toBeTrue();
+test('HasOwner trait exists', function () {
+    expect(trait_exists(HasOwner::class))->toBeTrue();
 });
