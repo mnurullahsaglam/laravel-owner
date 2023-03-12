@@ -4,6 +4,7 @@ namespace Mnurullahsaglam\LaravelOwner\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Mnurullahsaglam\LaravelOwner\Tests\Models\TestUserModel;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -13,6 +14,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->setUpDatabase();
+
+        $this->createUser();
     }
 
     protected function tearDown(): void
@@ -36,5 +39,13 @@ class TestCase extends Orchestra
             $table->foreignId('user_id')->constrained('test_users')->cascadeOnDelete();
             $table->string('title');
         });
+    }
+
+    private function createUser()
+    {
+        TestUserModel::create([
+            'email'    => 'test@test.com',
+            'password' => bcrypt('12345678'),
+        ]);
     }
 }
