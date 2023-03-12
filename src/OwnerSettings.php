@@ -20,9 +20,6 @@ class OwnerSettings
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setOwnerColumn(string $ownerIdColumn): self
     {
         $this->ownerIdColumn = $ownerIdColumn;
