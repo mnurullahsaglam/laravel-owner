@@ -11,6 +11,7 @@ class TestPostModel extends Model
     use HasOwner;
 
     protected $table = 'test_posts';
+
     protected $guarded = [];
 
     public $timestamps = false;
