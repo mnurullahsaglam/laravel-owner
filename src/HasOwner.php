@@ -11,10 +11,7 @@ trait HasOwner
 {
     protected OwnerSettings $ownerSettings;
 
-    public function getOwnerSettings(): OwnerSettings
-    {
-        return OwnerSettings::create();
-    }
+    abstract public function getOwnerSettings(): OwnerSettings;
 
     protected static function bootHasOwner(): void
     {
@@ -46,7 +43,8 @@ trait HasOwner
             throw InvalidSetting::invalidOwnerModel();
         }
 
-        if (! in_array($this->ownerSettings->ownerIdColumn, $this->getFillable())) {
+        if (! in_array($this->ownerSettings->ownerIdColumn,
+            $this->getConnection()->getSchemaBuilder()->getColumnListing('test_posts'))) {
             throw InvalidSetting::invalidOwnerIdColumn();
         }
     }
