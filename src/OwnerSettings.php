@@ -4,9 +4,9 @@ namespace Mnurullahsaglam\LaravelOwner;
 
 class OwnerSettings
 {
-    public string $ownerModel;
+    public string $ownerModel = 'App\Models\User';
 
-    public string $ownerIdColumn;
+    public string $ownerIdColumn = 'user_id';
 
     public static function create(): static
     {
