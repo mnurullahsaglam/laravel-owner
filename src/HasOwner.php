@@ -11,7 +11,10 @@ trait HasOwner
 {
     protected OwnerSettings $ownerSettings;
 
-    abstract public function getOwnerSettings(): OwnerSettings;
+    public function getOwnerSettings(): OwnerSettings
+    {
+        return OwnerSettings::create();
+    }
 
     protected static function bootHasOwner(): void
     {
