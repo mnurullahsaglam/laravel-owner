@@ -5,7 +5,10 @@ namespace Mnurullahsaglam\LaravelOwner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
-use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidSetting;
+use Illuminate\Support\Facades\Schema;
+use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerIdException;
+use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerModelException;
+use Mnurullahsaglam\LaravelOwner\Exceptions\UnauthorizedException;
 
 trait HasOwner
 {
@@ -36,19 +39,23 @@ trait HasOwner
         $this->{$this->ownerSettings->ownerIdColumn} = Auth::id();
     }
 
+    /**
+     * @throws UnauthorizedException
+     * @throws InvalidOwnerModelException
+     * @throws InvalidOwnerIdException
+     */
     protected function ensureValidOwnerSettings(): void
     {
         if (! Auth::check()) {
-            throw InvalidSetting::unauthorized();
+            throw new UnauthorizedException();
         }
 
         if (! class_exists($this->ownerSettings->ownerModel)) {
-            throw InvalidSetting::invalidOwnerModel();
+            throw new InvalidOwnerModelException();
         }
 
-        if (! in_array($this->ownerSettings->ownerIdColumn,
-            $this->getConnection()->getSchemaBuilder()->getColumnListing('test_posts'))) {
-            throw InvalidSetting::invalidOwnerIdColumn();
+        if (! Schema::hasColumn((new $this->ownerSettings->ownerModel)->getTable(), $this->ownerSettings->ownerIdColumn)) {
+            throw new InvalidOwnerIdException();
         }
     }
 
