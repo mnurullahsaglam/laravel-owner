@@ -1,6 +1,6 @@
 <?php
 
-use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerIdException;
+use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerColumnException;
 use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerModelException;
 use Mnurullahsaglam\LaravelOwner\Exceptions\UnauthorizedException;
 use Mnurullahsaglam\LaravelOwner\HasOwner;
@@ -14,8 +14,8 @@ test('HasOwner trait exists', function () {
     expect(trait_exists(HasOwner::class))->toBeTrue();
 });
 
-test('InvalidOwnerIdException class exists', function () {
-    expect(class_exists(InvalidOwnerIdException::class))->toBeTrue();
+test('InvalidOwnerColumnException class exists', function () {
+    expect(class_exists(InvalidOwnerColumnException::class))->toBeTrue();
 });
 
 test('InvalidOwnerModelException class exists', function () {
