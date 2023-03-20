@@ -18,6 +18,7 @@ class TestPostModel extends Model
     public function getOwnerSettings(): OwnerSettings
     {
         return OwnerSettings::create()
-            ->setOwnerModel(TestUserModel::class);
+        ->setOwnerModel(TestUserModel::class)
+        ->setOwnerColumn('user_id');
     }
 }
