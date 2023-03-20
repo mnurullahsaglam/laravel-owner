@@ -9,7 +9,7 @@ class InvalidOwnerColumnException extends Exception
 {
     public function __construct(
         string $ownerColumn,
-        $message = "Invalid owner column: %s. Please check your owner column.",
+        $message = 'Invalid owner column: %s. Please check your owner column.',
         $code = Response::HTTP_BAD_REQUEST
     ) {
         parent::__construct(sprintf($message, $ownerColumn), $code);
