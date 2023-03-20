@@ -6,7 +6,7 @@ class OwnerSettings
 {
     public string $ownerModel = 'App\Models\User';
 
-    public string $ownerIdColumn = 'user_id';
+    public string $ownerColumn = 'user_id';
 
     public static function create(): static
     {
@@ -20,9 +20,9 @@ class OwnerSettings
         return $this;
     }
 
-    public function setOwnerColumn(string $ownerIdColumn): self
+    public function setOwnerColumn(string $ownerColumn): self
     {
-        $this->ownerIdColumn = $ownerIdColumn;
+        $this->ownerColumn = $ownerColumn;
 
         return $this;
     }
