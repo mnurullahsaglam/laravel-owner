@@ -44,7 +44,7 @@ class TestCase extends Orchestra
     private function createUser()
     {
         TestUserModel::create([
-            'email'    => 'test@test.com',
+            'email' => 'test@test.com',
             'password' => bcrypt('12345678'),
         ]);
     }
