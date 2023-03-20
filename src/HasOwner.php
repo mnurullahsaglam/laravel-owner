@@ -54,7 +54,7 @@ trait HasOwner
             throw new InvalidOwnerModelException();
         }
 
-        if (! Schema::hasColumn((new $this->ownerSettings->ownerModel)->getTable(), $this->ownerSettings->ownerIdColumn)) {
+        if (! Schema::hasColumn((new $this)->getTable(), $this->ownerSettings->ownerIdColumn)) {
             throw new InvalidOwnerIdException();
         }
     }
