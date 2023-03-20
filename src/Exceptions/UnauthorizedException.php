@@ -10,9 +10,8 @@ class UnauthorizedException extends Exception
 {
     public function __construct(
         $message = "Unauthorized. Please login to continue.",
-        $code = Response::HTTP_UNAUTHORIZED,
-        Throwable $previous = null
+        $code = Response::HTTP_UNAUTHORIZED
     ) {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code);
     }
 }
