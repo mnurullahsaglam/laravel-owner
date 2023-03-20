@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
-use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerIdException;
+use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerColumnException;
 use Mnurullahsaglam\LaravelOwner\Exceptions\InvalidOwnerModelException;
 use Mnurullahsaglam\LaravelOwner\Exceptions\UnauthorizedException;
 
@@ -22,27 +22,27 @@ trait HasOwner
     protected static function bootHasOwner(): void
     {
         static::creating(function (Model $model) {
-            $model->addOwnerId();
+            $model->addOwner();
         });
 
         static::updating(function (Model $model) {
-            $model->addOwnerId();
+            $model->addOwner();
         });
     }
 
-    protected function addOwnerId(): void
+    protected function addOwner(): void
     {
         $this->ownerSettings = $this->getOwnerSettings();
 
         $this->ensureValidOwnerSettings();
 
-        $this->{$this->ownerSettings->ownerIdColumn} = Auth::id();
+        $this->{$this->ownerSettings->ownerColumn} = Auth::id();
     }
 
     /**
      * @throws UnauthorizedException
      * @throws InvalidOwnerModelException
-     * @throws InvalidOwnerIdException
+     * @throws InvalidOwnerColumnException
      */
     protected function ensureValidOwnerSettings(): void
     {
@@ -51,11 +51,11 @@ trait HasOwner
         }
 
         if (! class_exists($this->ownerSettings->ownerModel)) {
-            throw new InvalidOwnerModelException();
+            throw new InvalidOwnerModelException($this->ownerSettings->ownerModel);
         }
 
-        if (! Schema::hasColumn((new $this)->getTable(), $this->ownerSettings->ownerIdColumn)) {
-            throw new InvalidOwnerIdException();
+        if (! Schema::hasColumn((new $this)->getTable(), $this->ownerSettings->ownerColumn)) {
+            throw new InvalidOwnerColumnException($this->ownerSettings->ownerColumn);
         }
     }
 
@@ -63,6 +63,6 @@ trait HasOwner
     {
         $this->ownerSettings = $this->getOwnerSettings();
 
-        return $this->belongsTo($this->ownerSettings->ownerModel, $this->ownerSettings->ownerIdColumn);
+        return $this->belongsTo($this->ownerSettings->ownerModel, $this->ownerSettings->ownerColumn);
     }
 }
